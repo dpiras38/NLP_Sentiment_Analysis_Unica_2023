@@ -1,14 +1,26 @@
 import tweepy
 import pandas as pd
+import configparser
+import os
 
-# Inizializzazione del client di tweepy tramite il bearer token
-token=''
+# Define file path and make sure path is correct
+file_name = "config.ini"
+
+# Config file stored in the same directory as the script.
+# Get currect working directory with os.getcwd()
+file_path = os.path.join(os.getcwd(), file_name)
+
+# Read info from the config file named config.ini
+config = configparser.RawConfigParser()
+config.read(file_path)
+token = config["twitter"]["Bearer_Token"]
+
+# Initialize the client
 client = tweepy.Client(bearer_token=token)
 
-# Funzione che prende in ingresso il nome di un trend e restituisce 30 tweet che ne fanno parte in dataframe
-# Tramite il client di tweepy vengono effettuate le query
-# La query è composta dal nome del trend, -is:retweet indica che non vogliamo retweet e infine lang:en
-# indica che vogliamo solo tweet in inglese
+# The function takes in input the name of a trend and returns 30 tweets that contain it
+# and returns a dataframe with the tweets
+# The query start by the trend name, then we add -is:retweet to avoid retweets and finally lang:en
 
 def get_tweets_trend(trend):
     try:
@@ -25,8 +37,8 @@ def get_tweets_trend(trend):
     except:
         print("Trend not found")
 
-# Funzione che prende in ingresso il nome di un utente e restituisce 30 tweet che ne fanno parte in dataframe
-# A differenza dell'altra funzione in questo caso usiamo "from:" per indicare che vogliamo i tweet di un utente
+# Function very similar to the previous one, but it takes in input a username instead of a trend
+# Instead of the trend name, we add from: to the query to specify that we want the tweets of a specific user
 def get_tweets_user(user):
     try:
         query = 'from:' + user + ' -is:retweet lang:en'
@@ -40,5 +52,4 @@ def get_tweets_user(user):
         return df_test['tweet']
     except:
         print("User not found")
-
 

@@ -11,7 +11,7 @@ filename = current_path + "/tweet_data.csv"
 df = pd.read_csv(filename,encoding='latin-1', names=col_names)
 
 # Pick 100000 random samples
-df=df.sample(10)
+df=df.sample(100000)
 
 # Replace the 4 with 1 
 df['target']=df['target'].replace(4,1)
@@ -19,7 +19,6 @@ df['target']=df['target'].replace(4,1)
 # We pick up only the text and the target, containing the label and the tweet text
 data = df['text']
 labels = np.array(df['target'])
-
 
 st = time.time()
 # We apply the denoise_text function to the text of the tweets to clean them

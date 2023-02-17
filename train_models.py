@@ -18,7 +18,6 @@ if train_data == 1:
 
     data,labels = get_data()
 
-
     # Split of the dataset into train and test
     Train_X, Test_X, Train_Y, Test_Y = model_selection.train_test_split(data,labels,test_size=0.3)
 
